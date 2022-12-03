@@ -1,0 +1,55 @@
+https://gist.github.com/yjaaidi/7880a055876e50e2995471ab113dce02
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Angular Demo With CDN</title>
+    <meta name="description" content="Angular CDN" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <script type="importmap">
+      {
+        "imports": {
+          "@angular/common": "https://unpkg.com/@angular/common@14.0.1/fesm2020/common.mjs",
+          "@angular/compiler": "https://unpkg.com/@angular/compiler@14.0.1/fesm2020/compiler.mjs",
+          "@angular/core": "https://unpkg.com/@angular/core@14.0.1/fesm2020/core.mjs",
+          "@angular/platform-browser": "https://unpkg.com/@angular/platform-browser@14.0.1/fesm2020/platform-browser.mjs",
+          "rxjs": "https://unpkg.com/@esm-bundle/rxjs@7.5.5/esm/es2015/rxjs.min.js",
+          "rxjs/operators": "https://unpkg.com/@esm-bundle/rxjs@7.5.5/esm/es2015/rxjs-operators.min.js",
+          "zone.js": "https://unpkg.com/zone.js@0.11.5/fesm2015/zone.min.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <mc-app></mc-app>
+    <script type="module">
+      import 'zone.js';
+      import '@angular/compiler';
+      import { CommonModule } from '@angular/common';
+      import { bootstrapApplication } from '@angular/platform-browser';
+      import { Component, Injectable } from '@angular/core';
+
+      // @todo switch to decorators the days ES decorators land
+      // https://github.com/tc39/proposal-decorators
+
+      export function defineComponent(componentDef) {
+        const { component = class {}, ...rest } = componentDef;
+        return Component({
+          standalone: true,
+          ...rest,
+        })(component);
+      }
+
+      const App = defineComponent({
+        selector: 'mc-app',
+        template: `
+        <h1>Hello!{{"angular"+14}}</h1>
+        <a href="https://angular.io" target="_blank">Angular</a>
+        `
+      });
+
+      bootstrapApplication(App);
+    </script>
+  </body>
+</html>
